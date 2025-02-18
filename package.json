@@ -1,0 +1,22 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "nodejs homework project",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ekaterinadolyuk/homework-3.git"
+  },
+  "author": "ekaterinadolyuk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ekaterinadolyuk/homework-3/issues"
+  },
+  "homepage": "https://github.com/ekaterinadolyuk/homework-3#readme",
+  "dependencies": {
+    "fs-extra": "^11.3.0"
+  }
+}
