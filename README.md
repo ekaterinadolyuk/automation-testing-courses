@@ -1,1 +1,1 @@
-# homework-4
+# it-academy-JS-automation-testing
