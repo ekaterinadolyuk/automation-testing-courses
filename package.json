@@ -2,7 +2,7 @@
   "name": "nodejs",
   "version": "1.0.0",
   "description": "nodejs homework project",
-  "main": "index-hm-06.js",
+  "main": "index-hm-07.js",
   "scripts": {
     "test": "node index.js"
   },
