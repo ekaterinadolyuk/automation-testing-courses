@@ -1,41 +1,62 @@
 import { test, expect } from '@playwright/test';
-
-test.beforeEach(async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-});
+import { Navigation } from './pageObjects/navigation';
+import { MainPage } from './pageObjects/mainPage';
+import { DocsPage } from './pageObjects/docsPage';
+import { Footer } from './pageObjects/footer';
 
 test.describe('Playwright test package', () => {
 
   test('switch to website dark mode', async ({ page }) => {
-    const locator = page.locator('.colorModeToggle_DEke .toggleButton_gllP');
-    await locator.click();
-    await expect(locator).toHaveAttribute("title", "Switch between dark and light mode (currently dark mode)");
+    const navigation = new Navigation(page);
+    await navigation.navigate('https://playwright.dev/');
+    const switchButton = await navigation.clickOnSwitchButton();
+    await expect(switchButton).toHaveAttribute("title", "Switch between dark and light mode (currently dark mode)");
   });
 
   test('choose yarn for playwright installation', async ({ page }) => {
-    await page.click('//a[contains(@class,"getStarted_Sjon")]');
-    const yarnTab = page.locator('//div[@class="tabs-container tabList__CuJ"][1]//ul//li[normalize-space(text())="yarn"]');
-    await yarnTab.click();
+    const mainPage = new MainPage(page);
+    await mainPage.navigate('https://playwright.dev/');
+    await mainPage.clickOnStartButton();
+    const docsPage = new DocsPage(page);
+    const yarnTab = await docsPage.clickOnFirstYarnItem();
     await expect(yarnTab).toHaveClass(/tabs__item--active/);
   });
 
   test('when choosing python language in drop down menue, playwright page for python should be opened', async ({ page }) => {
-    const languageMenu = page.locator('//a[@href="#"]');
-    await languageMenu.hover();
-    const pythonLink = page.locator('//a[@href="/python/"]');
-    await pythonLink.click();
+    const navigation = new Navigation(page);
+    await navigation.navigate('https://playwright.dev/');
+    await navigation.clickOnLanguageMenuButton();
     await expect(page).toHaveURL('https://playwright.dev/python/');
   });
 
   test('should find api page through search field', async ({ page }) => {
-    const searchLocator = page.locator('.DocSearch-Button');
-    await searchLocator.click();
-    const inputText = page.locator('.DocSearch-Input');
-    await inputText.waitFor();
-    await inputText.pressSequentially('api testing');
-    const firstResult = page.locator('.DocSearch-Hit[aria-selected="true"]');
-    await firstResult.waitFor();
-    await inputText.press("Enter");
+    const navigation = new Navigation(page);
+    await navigation.navigate('https://playwright.dev/');
+    await navigation.findNeededResult();
     await expect(page).toHaveURL('https://playwright.dev/docs/api-testing');
   });
+
+  test('text \'Full isolation • Fast execution\' present on the page', async ({ page }) => {
+    const mainPage = new MainPage(page);
+    await mainPage.navigate('https://playwright.dev/');
+    const result = await mainPage.searchSomeText();
+    await expect(result).toBeVisible();
+  })
+
+  test('Getting started accordion on Docs page should collapse when clicking on it', async ({ page }) => {
+    const mainPage = new MainPage(page);
+    await mainPage.navigate('https://playwright.dev/');
+    await mainPage.clickOnStartButton();
+    const docsPage = new DocsPage(page);
+    const gettingStartedAccordion = await docsPage.clickOnGettingStartedAccordion();
+    const parent = page.locator('li.menu__list-item', { has: gettingStartedAccordion })
+    await expect(parent).toHaveClass(/menu__list-item--collapsed/);
+  })
+
+  test('should open Ambassadors page from footer', async ({ page }) => {
+    const footer = new Footer(page);
+    await footer.navigate('https://playwright.dev/');
+    await footer.clickOnAmbassadorsFooterlink()
+    await expect(page).toHaveURL('https://playwright.dev/community/ambassadors');
+  })
 })
