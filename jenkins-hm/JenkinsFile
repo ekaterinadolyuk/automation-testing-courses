@@ -4,7 +4,9 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/ekaterinadolyuk/automation-testing-courses.git'
+                git branch: 'main',
+                    credentialsId: 'git-id',
+                    url: 'https://github.com/ekaterinadolyuk/automation-testing-courses.git'
             }
         }
 
