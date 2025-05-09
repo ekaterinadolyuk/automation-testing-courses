@@ -1,0 +1,59 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "additionalProperties": true,
+    "properties": {
+        "status": {
+            "type": "boolean"
+        },
+        "message": {
+            "type": "string"
+        },
+        "products": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "sku": {
+                        "type": "string"
+                    },
+                    "count": {
+                        "type": "number"
+                    },
+                    "size": {
+                        "type": "string"
+                    },
+                    "prices": {
+                        "type": "object",
+                        "properties": {
+                            "current_price": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "count": {
+            "type": "number"
+        },
+        "has_discount": {
+            "type": "boolean"
+        },
+        "amount": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "status",
+        "amount",
+        "message",
+        "products"
+    ]
+}
