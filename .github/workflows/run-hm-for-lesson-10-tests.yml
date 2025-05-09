@@ -1,0 +1,25 @@
+name: Run hm-for-lesson-10 Unit Tests
+
+on:
+  push:
+    branches:
+      - 'final-hm'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      working-directory: ./hm-for-lesson-10
+      run: npm install
+
+    - name: Run Unit Tests
+      working-directory: ./hm-for-lesson-10
+      run: npm test

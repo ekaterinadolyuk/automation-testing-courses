@@ -1,0 +1,14 @@
+{
+  "name": "tests-scripts-part2",
+  "version": "1.0.0",
+  "description": "tests part2",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^14.2.1"
+  }
+}
